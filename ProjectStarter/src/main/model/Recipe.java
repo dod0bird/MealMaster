@@ -1,9 +1,9 @@
 package model;
 
-public class Sample {
+public class Recipe {
     int other;
 
-    public Sample() {
+    public Recipe() {
         other = 4;
     }
 }
