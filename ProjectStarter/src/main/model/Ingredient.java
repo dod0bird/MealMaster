@@ -17,15 +17,15 @@ public class Ingredient {
     }
 
     public String getIngredientName() {
-        return "";
+        return ingredientName;
     }
 
     public double getIngredientQuantity() {
-        return 1;
+        return ingredientQuantity;
     }
 
     public String getIngredientUnit() {
-        return "";
+        return ingredientUnit;
     }
 
 }

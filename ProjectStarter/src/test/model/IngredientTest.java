@@ -19,7 +19,7 @@ public class IngredientTest {
     void constructorTest() {
         assertEquals("banana", testIngredient1.getIngredientName());
         assertEquals(1, testIngredient1.getIngredientQuantity());
-        assertEquals("units", testIngredient1.getIngredientUnit());
+        assertEquals("unit", testIngredient1.getIngredientUnit());
     }
 
     @Test
