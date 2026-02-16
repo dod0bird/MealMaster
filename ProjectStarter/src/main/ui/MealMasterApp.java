@@ -3,6 +3,8 @@ package ui;
 import model.*;
 import java.util.*;
 
+// this ui code was inspiried by the code in the TellerApp project provided.
+
 public class MealMasterApp {
     private RecipeBook recipeBook;
     private Scanner input;
@@ -16,6 +18,9 @@ public class MealMasterApp {
     // EFFECTS: processes user input and runs the application
     private void startNewApp() {
         boolean keepGoing = true;
+        String command = null;
+
+        init();
     }
 
     // MODIFIES: this
