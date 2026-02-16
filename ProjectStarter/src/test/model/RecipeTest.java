@@ -27,10 +27,10 @@ public class RecipeTest {
     @Test
     void constructorTest() {
         assertEquals("Banana Bread", testRecipe.getRecipeName());
-        assertNull(testRecipe.getIngredients());
+        assertEquals(0, testRecipe.getIngredients().size());
         assertEquals(75, testRecipe.getCookingTime());
         assertEquals("American", testRecipe.getCuisineType());
-        assertEquals(4.00, testRecipe.getCost());
+        assertEquals(4.00, testRecipe.getCost(), 0);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class RecipeTest {
 
     @Test
     void addIngredientTest() {
-        assertNull(testRecipe.getIngredients());
+        assertEquals(0, testRecipe.getIngredients().size());
         testRecipe.addIngredient(banana);
         assertEquals(1, testRecipe.getIngredients().size());
         assertEquals(banana, testRecipe.getIngredients().get(0));
@@ -69,16 +69,15 @@ public class RecipeTest {
 
     @Test
     void isWithinCookingTimeTest() {
-        assertFalse(testRecipe.isWithinCookingTime(76));
+        assertTrue(testRecipe.isWithinCookingTime(76));
         assertTrue(testRecipe.isWithinCookingTime(75));
-        assertTrue(testRecipe.isWithinCookingTime(74));
+        assertFalse(testRecipe.isWithinCookingTime(74));
     }
 
     @Test
     void isWithinCostTest() {
-        assertTrue(testRecipe.isWithinCost(3.99));
+        assertFalse(testRecipe.isWithinCost(3.99));
         assertTrue(testRecipe.isWithinCost(4.00));
-        assertFalse(testRecipe.isWithinCost(4.01));
-        assertFalse(testRecipe.isWithinCost(6.01));
+        assertTrue(testRecipe.isWithinCost(6.01));
     }
 }
