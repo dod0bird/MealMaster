@@ -10,18 +10,12 @@ public class RecipeTest {
     private Recipe testRecipe;
     private Ingredient banana;
     private Ingredient flour;
-    private Ingredient bakingSoda;
-    
+
     @BeforeEach
     void runBefore() {
         testRecipe = new Recipe("Banana Bread", 75, "American", 4.00);
         banana = new Ingredient("banana", 2, "unit");
         flour = new Ingredient("flour", 2, "cups");
-        bakingSoda = new Ingredient("baking soda", 1, "teaspoon");
-        Ingredient salt = new Ingredient("salt", 0.25, "teaspoon");
-        Ingredient brownSugar = new Ingredient("brown sugar", 0.75, "cups");
-        Ingredient butter = new Ingredient("butter", 0.5, "cups");
-        Ingredient egg = new Ingredient("egg", 2, "units");
     }
 
     @Test
