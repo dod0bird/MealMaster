@@ -13,17 +13,19 @@ public class RecipeBookTest {
     private Recipe bananaBread;
     private Recipe pasta;
     private Recipe salad;
+    private Ingredient banana;
+    private Ingredient tomatoSauce;
 
     @BeforeEach
     void runBefore() {
         testRecipeBook = new RecipeBook();
 
         bananaBread = new Recipe("banana bread", 75, "american", 4.00);
-        Ingredient banana = new Ingredient("banana", 2, "units");
+        banana = new Ingredient("banana", 2, "units");
         bananaBread.addIngredient(banana);
 
         pasta = new Recipe("pasta", 30, "italian", 7.00);
-        Ingredient tomatoSauce = new Ingredient("tomato sauce", 1, "can");
+        tomatoSauce = new Ingredient("tomato sauce", 1, "can");
         pasta.addIngredient(tomatoSauce);
 
         salad = new Recipe("salad", 15, "Greek", 3.00);
@@ -47,7 +49,8 @@ public class RecipeBookTest {
     @Test
     void getRecipeTest() {
         testRecipeBook.addRecipe(bananaBread);
-        assertEquals(bananaBread, testRecipeBook.getRecipes());
+        assertEquals(1, testRecipeBook.getRecipes().size());
+        assertEquals(bananaBread, testRecipeBook.getRecipes().get(0));
     }
 
     @Test 
@@ -136,7 +139,7 @@ public class RecipeBookTest {
 
         int[] timelimits = {30, 20};
 
-        assertEquals(2, testRecipeBook.generateWeeklySchedule(timelimits, 10.00, null, null));
+        assertEquals(2, testRecipeBook.generateWeeklySchedule(timelimits, 10.00, null, null).size());
 
         double totalCost = 0;
         for (Recipe r : testRecipeBook.generateWeeklySchedule(timelimits, 10.00, null, null)) {
@@ -152,9 +155,10 @@ public class RecipeBookTest {
 
         List<Recipe> plannedRecipes = new ArrayList<Recipe>();
         plannedRecipes.add(bananaBread);
+        
 
         assertEquals(1, testRecipeBook.generateGroceryList(plannedRecipes).size());
-        assertEquals("banana", testRecipeBook.generateGroceryList(plannedRecipes).get(0));
+        assertEquals(banana, testRecipeBook.generateGroceryList(plannedRecipes).get(0));
     } 
 
     @Test
@@ -167,8 +171,8 @@ public class RecipeBookTest {
         plannedRecipes.add(pasta);
 
         assertEquals(2, testRecipeBook.generateGroceryList(plannedRecipes).size());
-        assertEquals("banana", testRecipeBook.generateGroceryList(plannedRecipes).get(0));
-        assertEquals("tomato sauce", testRecipeBook.generateGroceryList(plannedRecipes).get(1));
+        assertEquals(banana, testRecipeBook.generateGroceryList(plannedRecipes).get(0));
+        assertEquals(tomatoSauce, testRecipeBook.generateGroceryList(plannedRecipes).get(1));
     } 
     
 }
