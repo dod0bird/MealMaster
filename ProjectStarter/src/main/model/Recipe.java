@@ -7,7 +7,7 @@ import java.util.*;
 public class Recipe {
     private String recipeName;             // recipe name
     private List<Ingredient> ingredients;  // the required ingredients
-    private int cookingTime;               // the estimated cooking time
+    private int cookingTime;               // the estimated cooking time 
     private String cuisineType;            // the cuisine type
     private double cost;                   // the estimated cost
 
@@ -25,47 +25,52 @@ public class Recipe {
     }
 
     public String getRecipeName() {
-        return "";
+        return recipeName;
     }
 
     public List<Ingredient> getIngredients() {
-        return null;
+        return ingredients;
     }
 
     public int getCookingTime() {
-        return 0;
+        return cookingTime;
     }
 
     public String getCuisineType() {
-        return "";
+        return cuisineType;
     }
 
     public double getCost() {
-        return 0.0;
+        return cost;
     }
 
     // REQUIRES: ingredient is not null
     // MODIFIES: this
     // EFFECTS: adds given ingrident to list of ingredients 
     public void addIngredient(Ingredient ingredient) {
-        // stub
+        ingredients.add(ingredient);
     }
 
     // REQUIRES: ingredientName is not null
     // EFFECTS: returns true if this recipe contains the ingredient with given name
     public boolean hasIngredient(String ingredientName) {
+        for (Ingredient i : ingredients) {
+            if (i.getIngredientName().equals(ingredientName)) {
+                return true;
+            }
+        }
         return false;
     }
 
     // REQUIRES: maxTime > 0
-    // EFFECTS: returns true if cooking time < maxTime
+    // EFFECTS: returns true if cooking time <= maxTime
     public boolean isWithinCookingTime(int maxTime) {
-        return false;
+        return cookingTime <= maxTime;
     }
 
     // REQUIRES: maxCost >= 0.0
-    // EFFECTS: returns true if cost < maxCost
+    // EFFECTS: returns true if cost <= maxCost
     public boolean isWithinCost(double maxCost) {
-        return false;
+        return cost <= maxCost;
     }
 }
