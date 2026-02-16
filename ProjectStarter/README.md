@@ -24,4 +24,4 @@
 - As a user, I want to be able to select a recipe from my collection and view it in detail. 
 - As a user, I want to be able to search for specific recipes by ingredient, estimated cooking time, cuisine type, and cost.  
 - As a user, I want to be able to generate a weekly cooking schedule based on the time I have available each day, my budget, and my preferred ingredients or cuisine.
-- As a user, I want to be able to generate a grocery list for any missing ingredients required for my planned recipes.
+- As a user, I want to be able to generate a grocery list for any  ingredients required for my planned recipes.
