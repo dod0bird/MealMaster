@@ -75,7 +75,7 @@ public class MealMasterApp {
 
     // MODIFIES: this
     // EFFECTS: adds a recipe to the collection
-    private void doAddRecipeaAndIngredaent() {
+    private void doAddRecipeaAndIngredient() {
         System.out.println("Enter recipe name: ");
         String name = input.next();
         System.out.println("Enter cooking time (minutes): ");
