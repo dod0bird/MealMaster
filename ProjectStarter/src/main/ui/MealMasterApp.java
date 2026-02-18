@@ -129,7 +129,7 @@ public class MealMasterApp {
         System.out.println("\tt -> max cooking time");
         System.out.println("\tb -> max cost");
 
-        String choice = input.next().toLowerCase();
+        String choice = input.next();
         List<Recipe> results;
 
         if (choice.equals("i")) {
@@ -162,7 +162,7 @@ public class MealMasterApp {
         } else {
             System.out.println("\nSearch results: ");
             for (Recipe r : results) {
-                System.out.println(" " + r.getRecipeName() + " " + r.getCuisineType() + " " + r.getCookingTime() + " min " + r.getCost());
+                System.out.println("| name: " + r.getRecipeName() + " | cuisine: " + r.getCuisineType() + " | cooking time: " + r.getCookingTime() + " | min cost: $" + r.getCost());
             }
         }
     }
@@ -175,9 +175,9 @@ public class MealMasterApp {
             return;
         }
 
-        System.out.println("\nGrovery list: ");
+        System.out.println("\nGrocery list: ");
         for (Ingredient i : groceryList) {
-            System.out.println(" " + i.getIngredientQuantity() + " " + i.getIngredientUnit() + " " + i.getIngredientName());
+            System.out.println("- " + i.getIngredientQuantity() + " " + i.getIngredientUnit() + " " + i.getIngredientName());
         }
     }
 }
