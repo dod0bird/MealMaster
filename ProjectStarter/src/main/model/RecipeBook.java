@@ -86,11 +86,10 @@ public class RecipeBook {
         return results;
     }
 
-    // REQUIRES: dailyTimeLimits is not null, preferredCuisine and preferredIngredient can be null,
-    //           budget >= 0
-    // EFFECTS: returns a list of recipes that create a weekly schedule that fit within each day's time limit,
-    //          does not exceed total budget, and matches the preffered cuisine or ingredient if provided
-    public List<Recipe> generateWeeklySchedule(int[] dailyTimeLimits, double budget, String preferredCuisine, String preferredIngredient) {
+    // REQUIRES: dailyTimeLimits is not null, budget >= 0
+    // EFFECTS: returns a list of recipes that create a weekly schedule that fit within each day's time limit and
+    //          does not exceed total budget
+    public List<Recipe> generateWeeklySchedule(int[] dailyTimeLimits, double budget) {
         List<Recipe> schedule = new ArrayList<>();
         double totalCost = 0;
 
