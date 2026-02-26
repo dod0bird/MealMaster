@@ -139,10 +139,10 @@ public class RecipeBookTest {
 
         int[] timelimits = {30, 20};
 
-        assertEquals(2, testRecipeBook.generateWeeklySchedule(timelimits, 10.00, null, null).size());
+        assertEquals(2, testRecipeBook.generateWeeklySchedule(timelimits, 10.00).size());
 
         double totalCost = 0;
-        for (Recipe r : testRecipeBook.generateWeeklySchedule(timelimits, 10.00, null, null)) {
+        for (Recipe r : testRecipeBook.generateWeeklySchedule(timelimits, 10.00)) {
             totalCost += r.getCost();
         }
 
