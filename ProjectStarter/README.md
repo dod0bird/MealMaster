@@ -24,3 +24,5 @@
 - As a user, I want to be able to search for specific recipes by ingredient, estimated cooking time, cuisine type, and cost.  
 - As a user, I want to be able to generate a weekly cooking schedule based on the time I have available each day and my budget.
 - As a user, I want to be able to generate a grocery list for any  ingredients required for my planned recipes.
+- As a user, when I start the application, I want to be given the option to load my recipe collection from file.
+- As a user, when I select quit, I want to be given the option to save my recipe collection to file. 
