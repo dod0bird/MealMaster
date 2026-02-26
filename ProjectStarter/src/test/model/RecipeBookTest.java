@@ -2,7 +2,6 @@ package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -174,5 +173,4 @@ public class RecipeBookTest {
         assertEquals(banana, testRecipeBook.generateGroceryList(plannedRecipes).get(0));
         assertEquals(tomatoSauce, testRecipeBook.generateGroceryList(plannedRecipes).get(1));
     } 
-    
 }

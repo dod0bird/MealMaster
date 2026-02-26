@@ -49,6 +49,8 @@ public class MealMasterApp {
             doSearchRecipes();
         } else if (command.equals("m")) {
             doGroceryList();
+        } else if (command.equals("g")) {
+            doGenerateWeeklySchedule();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -70,6 +72,7 @@ public class MealMasterApp {
         System.out.println("\tv -> view recipes");
         System.out.println("\ts -> search recipes");
         System.out.println("\tm -> make grocery list");
+        System.out.println("\tg -> generate weekly schedule");
         System.out.println("\tq -> quit");
     }
 
@@ -178,6 +181,29 @@ public class MealMasterApp {
         System.out.println("\nGrocery list: ");
         for (Ingredient i : groceryList) {
             System.out.println("- " + i.getIngredientQuantity() + " " + i.getIngredientUnit() + " " + i.getIngredientName());
+        }
+    }
+
+    private void doGenerateWeeklySchedule() {
+        int[] timeLimits = new int[7];
+
+        System.out.println("Enter daily time limits (minutes) for the week");
+        for (int i = 0; i < 7; i++) {
+            System.out.println("Day " + (i + 1) + ": ");
+            timeLimits[i] = input.nextInt();
+        }
+
+        System.out.println("Enter maximum weekly budget: ");
+        double budget = input.nextDouble();
+
+        List<Recipe> schedule = recipeBook.generateWeeklySchedule(timeLimits, budget);
+
+        System.out.println("\nWeekly Schedule: ");
+
+        int day = 1;
+        for (Recipe r : schedule) {
+            System.out.println("Day " + day + ": " + r.getRecipeName());
+            day++;
         }
     }
 }
