@@ -3,8 +3,12 @@ package ui;
 import model.*;
 import java.util.*;
 
+import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
+
 // this ui code was inspiried by the code in the TellerApp project provided.
 
+// Represents the meal master application
+@ExcludeFromJacocoGeneratedReport
 public class MealMasterApp {
     private RecipeBook recipeBook;
     private Scanner input;
