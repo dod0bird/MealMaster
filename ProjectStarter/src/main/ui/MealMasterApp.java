@@ -184,6 +184,7 @@ public class MealMasterApp {
         }
     }
 
+    // EFFECTS: generates a weekly schedule from provided time limit and budget
     private void doGenerateWeeklySchedule() {
         int[] timeLimits = new int[7];
 
