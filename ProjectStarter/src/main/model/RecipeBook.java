@@ -2,8 +2,13 @@ package model;
 
 import java.util.*;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 // Represents a user's collection of recipes
-public class RecipeBook {
+public class RecipeBook implements Writable {
     private List<Recipe> recipes; // list of recipes
 
     // EFFECTS: create a new empty recipe collection
@@ -115,5 +120,23 @@ public class RecipeBook {
         groceryList.addAll(r.getIngredients());
        }
        return groceryList;
+    }
+
+    // EFFECTS: returns this recipebook as a JSON object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("recipes", recipesToJson());
+        return json;
+    }
+
+    // EFFECTS: returns recipes in this recipebook as a JSON array
+    private JSONArray recipesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Recipe r : recipes) {
+            jsonArray.put(r.toJson());
+        }
+        return jsonArray;
     }
 }
