@@ -114,12 +114,12 @@ public class RecipeBook implements Writable {
     // EFFECTS: returns a list containing all ingredients required
     //          for the given planned recipes 
     public List<Ingredient> generateGroceryList(List<Recipe> plannedRecipes) {
-       List<Ingredient> groceryList = new ArrayList<Ingredient>();
-
-       for (Recipe r : plannedRecipes) {
-        groceryList.addAll(r.getIngredients());
-       }
-       return groceryList;
+        List<Ingredient> groceryList = new ArrayList<Ingredient>();
+        
+        for (Recipe r : plannedRecipes) {
+            groceryList.addAll(r.getIngredients());
+        }
+        return groceryList;
     }
 
     // EFFECTS: returns this recipebook as a JSON object

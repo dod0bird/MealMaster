@@ -1,4 +1,5 @@
 package persistence;
+
 import model.*;
 import org.json.JSONObject;
 
@@ -20,7 +21,7 @@ public class JsonWriter {
     // MODIFIES: this
     // EFFECTS: opens writer; throws FileNotFoundException if destination
     // cannot be open for writing
-    public void open() throws FileNotFoundException{
+    public void open() throws FileNotFoundException {
         writer = new PrintWriter(new File(destination));
     }
 

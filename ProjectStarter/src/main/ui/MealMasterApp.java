@@ -95,7 +95,7 @@ public class MealMasterApp {
         System.out.println("\tl -> load recipe book from file");
         System.out.println("\tq -> quit");
     }
-
+    
     // MODIFIES: this
     // EFFECTS: adds a recipe to the collection
     private void doAddRecipeaAndIngredient() {
@@ -107,11 +107,9 @@ public class MealMasterApp {
         String cuisine = input.next();
         System.out.println("Enter estimated cost ($): ");
         double cost = input.nextDouble();
-
         Recipe recipe = new Recipe(name, time, cuisine, cost);
-
         System.out.println("Add ingredients (type 'done' when finished):");
-        while(true) {
+        while (true) {
             System.out.print("Ingredient name: ");
             String ingName = input.next();
             if (ingName.equalsIgnoreCase("Done")) {
@@ -120,12 +118,8 @@ public class MealMasterApp {
             System.out.print("Quantity: ");
             double qty = input.nextDouble();
             System.out.print("Units: ");
-            String unit = input.next();
-
-            Ingredient ingredient = new Ingredient(ingName, qty, unit);
-            recipe.addIngredient(ingredient);
+            recipe.addIngredient((new Ingredient(ingName, qty, input.next())));
         }
-
         recipeBook.addRecipe(recipe);
         System.out.println("Recipe added successfully!");
     }
@@ -134,73 +128,65 @@ public class MealMasterApp {
     private void doViewRecipes() {
         List<Recipe> recipes = recipeBook.getRecipes();
         if (recipes.isEmpty()) {
-            System.out.println("No recipes available." );
+            System.out.println("No recipes available.");
             return;
         }
 
         System.out.println("Recipes:");
         for (Recipe r : recipes) {
-            System.out.println("| name: " + r.getRecipeName() + " | cuisine: " + r.getCuisineType() + " | cooking time: " + r.getCookingTime() + " | min cost: $" + r.getCost());
+            System.out.println("| name: " + r.getRecipeName() + " | cuisine: " + r.getCuisineType() 
+                    + " | cooking time: " + r.getCookingTime() + " | min cost: $" + r.getCost());
         }
     }
 
     // EFFECTS: search recipes by ingredient, cuisine, cookingtime, or cost
     private void doSearchRecipes() {
-        System.out.println("\nSearch by:");
-        System.out.println("\ti -> ingredient");
-        System.out.println("\tc -> cuisine");
-        System.out.println("\tt -> max cooking time");
-        System.out.println("\tb -> max cost");
-
-        String choice = input.next();
-        List<Recipe> results;
-
-        if (choice.equals("i")) {
-            System.out.print("Enter ingredient name: ");
-            String ing = input.next();
-            results = recipeBook.searchByIngredient(ing);
-
-        } else if (choice.equals("c")) {
-            System.out.print("Enter cuisine type: ");
-            String cuisine = input.next();
-            results = recipeBook.searchByCuisine(cuisine);
-  
-        } else if (choice.equals("t")) {
-            System.out.print("Enter maximum cooking time: ");
-            int time = input.nextInt();
-            results = recipeBook.searchByCookingTime(time);
- 
-        } else if (choice.equals("b")) {
-            System.out.print("Enter maximum budget: ");
-            double cost = input.nextDouble();
-            results = recipeBook.searchByCost(cost);
-   
-        } else {
+        System.out.println("\nSearch by: \ni - ingredient \nc - cuisine \nt - max time \nsb - max-cost");
+        List<Recipe> results = getSearchResults(input.next());
+        if (results == null) {
             System.out.println("Selection not valid...");
-            return;
-        }
-
-        if (results.isEmpty()) {
+        } else if (results.isEmpty()) {
             System.out.println("No recipes found.");
         } else {
             System.out.println("\nSearch results: ");
             for (Recipe r : results) {
-                System.out.println("| name: " + r.getRecipeName() + " | cuisine: " + r.getCuisineType() + " | cooking time: " + r.getCookingTime() + " | min cost: $" + r.getCost());
+                System.out.println("| name: " + r.getRecipeName() + " | cuisine: " + r.getCuisineType() 
+                        + " | cooking time: " + r.getCookingTime() + " | min cost: $" + r.getCost());
             }
         }
+    }
+
+    // EFFECTS: processes input for doSearchRecipes
+    private List<Recipe> getSearchResults(String choice) {
+        if (choice.equals("i")) {
+            System.out.print("Enter ingredient name: ");
+            return recipeBook.searchByIngredient(input.next());
+        } else if (choice.equals("c")) {
+            System.out.print("Enter cuisine type: ");
+            return recipeBook.searchByCuisine(input.next());
+        } else if (choice.equals("t")) {
+            System.out.print("Enter maximum cooking time: ");
+            return recipeBook.searchByCookingTime(input.nextInt());
+        } else if (choice.equals("b")) {
+            System.out.print("Enter maximum budget: ");
+            return recipeBook.searchByCost(input.nextDouble());
+        }
+        return null;
     }
 
     // EFFECTS: generates a grocery list from all recipes in recipeBook
     private void doGroceryList() {
         List<Ingredient> groceryList = recipeBook.generateGroceryList(recipeBook.getRecipes());
         if (groceryList.isEmpty()) {
-            System.out.println("No ingredients found." );
+            System.out.println("No ingredients found.");
             return;
         }
 
         System.out.println("\nGrocery list: ");
+
         for (Ingredient i : groceryList) {
-            System.out.println("- " + i.getIngredientQuantity() + " " + i.getIngredientUnit() + " " + i.getIngredientName());
+            System.out.println("- " + i.getIngredientQuantity() + " " + i.getIngredientUnit() 
+                    + " " + i.getIngredientName());
         }
     }
 
