@@ -1,20 +1,30 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+import java.io.FileNotFoundException;
 import java.util.*;
 
 import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 
 // this ui code was inspiried by the code in the TellerApp project provided.
+// the JSON code was inspiried JsonSerializationDemo project provided.
 
 // Represents the meal master application
 @ExcludeFromJacocoGeneratedReport
 public class MealMasterApp {
+    private static final String JSON_STORE = "./data/mealMaster.json";
     private RecipeBook recipeBook;
     private Scanner input;
+    private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
 
     // EFFECTS: runs the Meal Master application
     public MealMasterApp() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         startNewApp();
     }
 
@@ -55,6 +65,10 @@ public class MealMasterApp {
             doGroceryList();
         } else if (command.equals("g")) {
             doGenerateWeeklySchedule();
+        } else if (command.equals("w")) {
+            doSaveRecipeBook();
+        } else if (command.equals("l")) {
+            doLoadRecipeBook();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -77,6 +91,8 @@ public class MealMasterApp {
         System.out.println("\ts -> search recipes");
         System.out.println("\tm -> make grocery list");
         System.out.println("\tg -> generate weekly schedule");
+        System.out.println("\tw -> save recipe book to file");
+        System.out.println("\tl -> load recipe book from file");
         System.out.println("\tq -> quit");
     }
 
@@ -209,6 +225,29 @@ public class MealMasterApp {
         for (Recipe r : schedule) {
             System.out.println("Day " + day + ": " + r.getRecipeName());
             day++;
+        }
+    }
+
+    // EFFECTS: saves recipebook to file
+    private void doSaveRecipeBook() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(recipeBook);
+            jsonWriter.close();
+            System.out.println("Saved recipe book to file: " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads recipebook from file
+    private void doLoadRecipeBook() {
+        try {
+            recipeBook = jsonReader.read();
+            System.out.println("Loaded recipe book from :" + JSON_STORE);
+        } catch (Exception e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 }
