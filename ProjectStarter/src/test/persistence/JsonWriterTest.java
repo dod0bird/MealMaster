@@ -24,6 +24,7 @@ public class JsonWriterTest extends JsonTest {
 
     @Test
     void testWriteEmptyRecipeBook() {
+        try {
         RecipeBook rb = new RecipeBook();
         JsonWriter writer = new JsonWriter("./data/testWriterEmptyRecipeBook.json");
         writer.open();
@@ -33,10 +34,15 @@ public class JsonWriterTest extends JsonTest {
         JsonReader reader = new JsonReader("./data/testWriterEmptyRecipeBook.json");
         rb = reader.read();
         assertEquals(0, rb.getRecipes().size());
+
+        } catch (Exception e) {
+            fail("Exception should not have been thrown");
+        }
     }
 
     @Test
     void testWriteSingleRecipeBook() {
+        try {
         RecipeBook rb = new RecipeBook();
         Recipe ramen = new Recipe("ramen", 10, "japanese", 1);
         ramen.addIngredient(new Ingredient("noodle", 200, "g"));
@@ -58,10 +64,14 @@ public class JsonWriterTest extends JsonTest {
         assertEquals(2, testRecipe.getIngredients().size());
         checkIngredient("noodle", 200, "g", testRecipe.getIngredients().get(0));
         checkIngredient("egg", 1, "unit", testRecipe.getIngredients().get(1));
+        } catch (Exception e) {
+            fail("Exception should not have been thrown");
+        }
     }
 
     @Test
     void testWriteMultiRecipeBook() {
+        try {
         RecipeBook rb = new RecipeBook();
         Recipe miso = new Recipe("miso soup", 20, "japanese", 4);
         miso.addIngredient(new Ingredient("tofu", 150, "g"));
@@ -94,5 +104,8 @@ public class JsonWriterTest extends JsonTest {
         assertEquals(2, r2.getIngredients().size());
         checkIngredient("tofu", 150, "g", r2.getIngredients().get(0));
         checkIngredient("miso soup base", 1, "carton", r2.getIngredients().get(1));
+        } catch (Exception e) {
+            fail("Exception should not have been thrown");
+        }
     }
 }
