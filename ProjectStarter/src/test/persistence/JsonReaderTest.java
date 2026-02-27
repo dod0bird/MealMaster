@@ -14,9 +14,13 @@ public class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderNonExistentFile() {
-        JsonReader reader = new JsonReader("./data/noFile.json");
-        RecipeBook rb = reader.read();
-        assertNull(rb);
+        try {
+            JsonReader reader = new JsonReader("./data/noFile.json");
+            RecipeBook rb = reader.read();
+            fail("Exception expected");
+        } catch (Exception e) {
+            // pass
+        }
     }
 
     @Test
