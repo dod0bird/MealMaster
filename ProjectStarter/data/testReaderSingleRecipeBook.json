@@ -1,7 +1,7 @@
 {
     "recipes": [
         {
-            "name": "Pasta",
+            "name": "pasta",
             "time": 30,
             "cuisine": "italian",
             "cost": 13,
