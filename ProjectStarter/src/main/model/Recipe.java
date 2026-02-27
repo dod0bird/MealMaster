@@ -2,9 +2,14 @@ package model;
 
 import java.util.*;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 // Represents a recipe having a name, a list of ingredients, a estimated cooking
 // time (in minutes), a cuisine type, and an estimated cost (in dollars)
-public class Recipe {
+public class Recipe implements Writable {
     private String recipeName;             // recipe name
     private List<Ingredient> ingredients;  // the required ingredients
     private int cookingTime;               // the estimated cooking time 
@@ -72,5 +77,27 @@ public class Recipe {
     // EFFECTS: returns true if cost <= maxCost
     public boolean isWithinCost(double maxCost) {
         return cost <= maxCost;
+    }
+
+    // EFFECTS: returns this recipe as a JSON object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", recipeName);
+        json.put("time", cookingTime);
+        json.put("cuisine", cuisineType);
+        json.put("cost", cost);
+        json.put("ingredients", ingredientsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns ingredients in this recipe as a JSON array
+    public JSONArray ingredientsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Ingredient i : ingredients) {
+            jsonArray.put(i.toJson());
+        }
+        return jsonArray;
     }
 }
