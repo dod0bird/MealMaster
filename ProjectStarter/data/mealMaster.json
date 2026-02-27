@@ -1,0 +1,40 @@
+{
+    "recipes": [
+        {
+            "name": "pasta",
+            "time": 30,
+            "cuisine": "italian",
+            "cost": 13,
+            "ingredients": [
+                {
+                    "name": "spaghetti",
+                    "quantity": 200,
+                    "unit": "g"
+                },
+                {
+                    "name": "tomato sauce",
+                    "quantity": 1,
+                    "unit": "can"
+                }
+            ]
+        },
+        {
+            "name": "fried rice",
+            "time": 20,
+            "cuisine": "chinese",
+            "cost": 5,
+            "ingredients": [
+                {
+                    "name": "rice",
+                    "quantity": 1,
+                    "unit": "cup"
+                },
+                {
+                    "name": "egg",
+                    "quantity": 2,
+                    "unit": "units"
+                }
+            ]
+        }
+    ]
+}
