@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
+import model.*;
 
 
 // this ui code was inspiried by the code in AlarmSystem.
@@ -21,9 +22,16 @@ public class MealMasterGUI extends JFrame {
     private JDesktopPane desktop;
 	private JInternalFrame controlPanel;
 
+    private JTextArea recipeArea;
+    private JComboBox<String> printCombo;
+
+    private RecipeBook rb;
+
     // EFFECTS: constructor creates the main window
     public MealMasterGUI() {
         super("Meal Master GUI");
+
+        rb = new RecipeBook();
 
         desktop = new JDesktopPane();
         setContentPane(desktop);
@@ -31,6 +39,9 @@ public class MealMasterGUI extends JFrame {
         controlPanel = new JInternalFrame("Control Panel", false, false, false, false);
         controlPanel.setLayout(new BorderLayout());
         controlPanel.setSize(600, 400);
+
+        addRecipePanel();
+
         desktop.add(controlPanel);
         controlPanel.setVisible(true);
 
@@ -40,4 +51,15 @@ public class MealMasterGUI extends JFrame {
 		setVisible(true);
     }
     
+    private void addRecipePanel() {
+        recipeArea = new JTextArea();
+        recipeArea.setEditable(false);
+        recipeArea.setLineWrap(true);
+        recipeArea.setWrapStyleWord(true);
+
+        JScrollPane scrollPane = new JScrollPane(recipeArea);
+        scrollPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        controlPanel.add(scrollPane, BorderLayout.CENTER);
+    }
 }
