@@ -5,8 +5,13 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 import model.*;
+import persistence.*;
+
 import java.util.*;
 import java.util.List;
 
@@ -31,11 +36,18 @@ public class MealMasterGUI extends JFrame {
 
     private RecipeBook rb;
 
+    private static final String JSON = "./data/mealMaster.json";
+    private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
+
     // EFFECTS: constructor creates the main window
     public MealMasterGUI() {
         super("Meal Master GUI");
 
         rb = new RecipeBook();
+
+        jsonReader = new JsonReader(JSON);
+        jsonWriter = new JsonWriter(JSON);
 
         desktop = new JDesktopPane();
         setContentPane(desktop);
@@ -47,12 +59,19 @@ public class MealMasterGUI extends JFrame {
         addRecipePanel();
         addButtonPanel();
         addMenuBar();
+        loadRecipeBook();
 
         desktop.add(controlPanel);
         controlPanel.setVisible(true);
 
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                saveOnExit();
+            }
+        });
         setLocationRelativeTo(null);
 		setVisible(true);
     }
@@ -305,5 +324,39 @@ public class MealMasterGUI extends JFrame {
                 JOptionPane.showMessageDialog(null, "Invalid input.", "System Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+    private void loadRecipeBook() {
+        int response = JOptionPane.showConfirmDialog(null,
+            "Load recipe collection from file?",
+            "load data",
+            JOptionPane.YES_NO_OPTION);
+        
+        if (response == JOptionPane.YES_NO_OPTION) {
+            try {
+                rb = jsonReader.read();
+                updateRecipeDisplay();
+            } catch (Exception e) {
+                 JOptionPane.showMessageDialog(null, "Unable to read from file:", "System Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void saveOnExit() {
+        int response = JOptionPane.showConfirmDialog(null,
+            "Save recipe book before exiting?",
+            "save data",
+            JOptionPane.YES_NO_CANCEL_OPTION);
+
+        if (response == JOptionPane.YES_NO_CANCEL_OPTION) {
+            try {
+                jsonWriter.open();
+                jsonWriter.write(rb);
+                jsonWriter.close();
+            } catch (Exception e) {
+                 JOptionPane.showMessageDialog(null, "Unable to save file:", "System Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        System.exit(0);
     }
 }
