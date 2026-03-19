@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 import model.*;
+import java.util.*;
+import java.util.List;
 
 
 // this ui code was inspiried by the code in AlarmSystem.
@@ -38,9 +40,9 @@ public class MealMasterGUI extends JFrame {
         desktop = new JDesktopPane();
         setContentPane(desktop);
         
-        controlPanel = new JInternalFrame("Control Panel", false, false, false, false);
+        controlPanel = new JInternalFrame("Meal Master", false, false, false, false);
         controlPanel.setLayout(new BorderLayout());
-        controlPanel.setSize(600, 400);
+        controlPanel.setSize(1000, 400);
 
         addRecipePanel();
         addButtonPanel();
@@ -60,15 +62,30 @@ public class MealMasterGUI extends JFrame {
         recipeList = new JList<>(listModel);
         recipeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-        // recipeArea = new JTextArea();
-        // recipeArea.setEditable(false);
-        // recipeArea.setLineWrap(true);
-        // recipeArea.setWrapStyleWord(true);
+        recipeArea = new JTextArea();
+        recipeArea.setEditable(false);
+        recipeArea.setLineWrap(true);
+        recipeArea.setWrapStyleWord(true);
 
         JScrollPane scrollPane = new JScrollPane(recipeArea);
         scrollPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         controlPanel.add(scrollPane, BorderLayout.CENTER);
+    }
+
+    private void updateRecipeDisplay() {
+        recipeArea.setText("");
+
+        for (Recipe r : rb.getRecipes()) {
+            recipeArea.append("| name: " + r.getRecipeName()
+            + " | cuisine: " + r.getCuisineType()
+            + " | time: " + r.getCookingTime()
+            + " | cost: $" + r.getCost() + "\n");
+        }
+
+        if (rb.getRecipes().isEmpty()) {
+            recipeArea.setText("No recipes avaliable.");
+        }
     }
 
     /**
@@ -114,57 +131,179 @@ public class MealMasterGUI extends JFrame {
 
         setJMenuBar(menuBar);
     }
+        
+    /**
+	 * Represents the action to be taken when the user wants to view all
+	 * recipes.
+	 */
+    private class ViewRecipesAction extends AbstractAction {
+        ViewRecipesAction() {
+            super("View Recipes");
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            updateRecipeDisplay();
+        }
+    }
 
     /**
 	 * Represents the action to be taken when the user wants to add a new
 	 * recipe to the book. 
 	 */
-    private class AddRecipeAction extends AbstractAction() {
+    private class AddRecipeAction extends AbstractAction {
+
         AddRecipeAction() {
             super("Add Recipe");
         }
-    }
 
-    /**
-	 * Represents the action to be taken when the user wants to view all
-	 * recipes.
-	 */
-    private class ViewRecipesAction extends AbstractAction() {
-        ViewRecipesAction() {
-            super("View Recipe");
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                String name = JOptionPane.showInputDialog("Enter recipe name:");
+                int time = Integer.parseInt(JOptionPane.showInputDialog("Enter cooking time (minutes):"));
+                String cuisine = JOptionPane.showInputDialog("Enter cuisine type:");
+                double cost = Double.parseDouble(JOptionPane.showInputDialog("Enter cost ($):"));
+                Recipe recipe = new Recipe(name, time, cuisine, cost);
+
+                while (true) {
+                    String ingName = JOptionPane.showInputDialog("Ingredient name (or 'done'):");
+                    if (ingName.equalsIgnoreCase("done")) {
+                        break;
+                    }
+
+                    double qty = Double.parseDouble(JOptionPane.showInputDialog("Quantity:"));
+                    String unit = JOptionPane.showInputDialog("Unit:");
+
+                    recipe.addIngredient(new Ingredient(ingName, qty, unit));
+                }
+                
+                rb.addRecipe(recipe);
+                updateRecipeDisplay();
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Invalid input.", "System Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
-
 
     /**
 	 * Represents the action to be taken when the user wants to search
 	 * recipes.
 	 */
-    private class SearchRecipesAction extends AbstractAction() {
+    private class SearchRecipesAction extends AbstractAction {
         SearchRecipesAction() {
-            super("Search Recipe");
+                super("Search Recipe");
+        }
+            
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String[] options = {"ingredient", "cuisine", "max time", "max cost"};
+            int choice = JOptionPane.showOptionDialog(null,
+                "Search by:",
+                "Search",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+            List<Recipe> results = new ArrayList<>();
+            try {
+                if (choice == 0) {
+                    String input = JOptionPane.showInputDialog("Enter ingredient name: ");
+                    results = rb.searchByIngredient(input);
+
+                } else if (choice == 1) {
+                    String input = JOptionPane.showInputDialog("Enter cuisine type: ");
+                    results = rb.searchByCuisine(input);
+
+                } else if (choice == 2) {
+                    int input = Integer.parseInt(JOptionPane.showInputDialog("Enter maximum cooking time (mins): "));
+                    results = rb.searchByCookingTime(input);
+
+                } else if (choice == 3) {
+                    Double input = Double.parseDouble(JOptionPane.showInputDialog("Enter maximum budget: "));
+                    results = rb.searchByCost(input);
+                }
+
+                recipeArea.setText("Search Results:\n");
+
+                for (Recipe r : results) {
+                    recipeArea.append("| name: " + r.getRecipeName() 
+                    + " | cuisine: " + r.getCuisineType() 
+                    + " | cooking time: " + r.getCookingTime() 
+                    + " | min cost: $" + r.getCost());
+                }
+
+                if (results.isEmpty()) {
+                    recipeArea.setText("No recipes found.");
+                }
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Invalid input.", "System Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
     /**
-	 * Represents the action to be taken when the user wants to search
-	 * recipes.
+	 * Represents the action to be taken when the user wants to create
+	 * a grocery list. 
 	 */
-    private class GroceryListAction extends AbstractAction() {
+    private class GroceryListAction extends AbstractAction {
         GroceryListAction() {
             super("Create Grocery List");
         }
-    }
 
-    /**
-	 * Represents the action to be taken when the user wants to search
-	 * recipes.
-	 */
-    private class WeeklyScheduleAction extends AbstractAction() {
-        WeeklyScheduleAction() {
-            super("Create Weekly Schedule");
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            List<Ingredient> groceryList = rb.generateGroceryList(rb.getRecipes());
+
+            recipeArea.setText("Grocery List: \n");
+             
+            for (Ingredient i : groceryList) {
+                recipeArea.append("- " + i.getIngredientQuantity() + " " + i.getIngredientUnit() 
+                    + " " + i.getIngredientName() + "\n");
+            }
+
+            if (groceryList.isEmpty()) {
+                recipeArea.setText("\"No ingredients found.");
+            }
         }
     }
 
-}
+    /**
+	 * Represents the action to be taken when the user wants to create
+	 * a weekly schedule. 
+	 */
+    private class WeeklyScheduleAction extends AbstractAction {
+        WeeklyScheduleAction() {
+            super("Create Weekly Schedule");
+        }
 
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                int[] timeLimits = new int[7];
+
+                for (int i = 0; i < 7; i++) {
+                    int input = Integer.parseInt(JOptionPane.showInputDialog
+                        ("Enter daily time limits (mins) for day: " + (i + 1)));
+                    timeLimits[i] = input;
+                }
+
+                double budget = Double.parseDouble(JOptionPane.showInputDialog("Enter maximum weekly budget: "));
+                List<Recipe> schedule = rb.generateWeeklySchedule(timeLimits, budget);
+
+                int day = 1;
+                for (Recipe r : schedule) {
+                    recipeArea.append("Day " + day + ": " + r.getRecipeName() + "|");
+                    day++;
+                }
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Invalid input.", "System Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+}
