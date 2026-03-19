@@ -41,6 +41,8 @@ public class MealMasterGUI extends JFrame {
         controlPanel.setSize(600, 400);
 
         addRecipePanel();
+        addButtonPanel();
+        addMenuBar();
 
         desktop.add(controlPanel);
         controlPanel.setVisible(true);
@@ -62,4 +64,49 @@ public class MealMasterGUI extends JFrame {
 
         controlPanel.add(scrollPane, BorderLayout.CENTER);
     }
+
+    /**
+	 * Helper to add control buttons.
+	 */
+    private void addButtonPanel() {
+        JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 5, 5));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        buttonPanel.add(new JButton(new AddRecipeAction()));
+        buttonPanel.add(new JButton(new ViewRecipesAction()));
+        buttonPanel.add(new JButton(new SearchRecipesAction()));
+        buttonPanel.add(new JButton(new GroceryListAction()));
+        buttonPanel.add(new JButton(new WeeklyScheduleAction()));
+        buttonPanel.add(createPrintCombo());
+
+        controlPanel.add(buttonPanel, BorderLayout.WEST);
+    }
+
+    /**
+	 * Helper to create print options combo box
+	 * @return  the combo box
+	 */
+	private JComboBox<String> createPrintCombo() {
+		printCombo = new JComboBox<String>();
+		printCombo.addItem("File");
+		printCombo.addItem("Screen");
+		return printCombo;
+	}
+
+    // EFFECTS: adds menu bar
+    private void addMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu recipeMenu = new JMenu("Recipes");
+        recipeMenu.add(new JMenuItem(new AddRecipeAction()));
+        recipeMenu.add(new JMenuItem(new ViewRecipesAction()));
+        recipeMenu.add(new JMenuItem(new SearchRecipesAction()));
+        recipeMenu.add(new JMenuItem(new GroceryListAction()));
+        recipeMenu.add(new JMenuItem(new WeeklyScheduleAction()));
+
+        menuBar.add(recipeMenu);
+
+        setJMenuBar(menuBar);
+    }
 }
+
