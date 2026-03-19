@@ -24,6 +24,8 @@ public class MealMasterGUI extends JFrame {
 
     private JTextArea recipeArea;
     private JComboBox<String> printCombo;
+    private JList<String> recipeList;
+    private DefaultListModel<String> listModel;
 
     private RecipeBook rb;
 
@@ -54,10 +56,14 @@ public class MealMasterGUI extends JFrame {
     }
     
     private void addRecipePanel() {
-        recipeArea = new JTextArea();
-        recipeArea.setEditable(false);
-        recipeArea.setLineWrap(true);
-        recipeArea.setWrapStyleWord(true);
+        listModel = new DefaultListModel<>();
+        recipeList = new JList<>(listModel);
+        recipeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        // recipeArea = new JTextArea();
+        // recipeArea.setEditable(false);
+        // recipeArea.setLineWrap(true);
+        // recipeArea.setWrapStyleWord(true);
 
         JScrollPane scrollPane = new JScrollPane(recipeArea);
         scrollPane.setBorder(new EmptyBorder(10, 10, 10, 10));
