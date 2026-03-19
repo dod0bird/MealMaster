@@ -108,5 +108,57 @@ public class MealMasterGUI extends JFrame {
 
         setJMenuBar(menuBar);
     }
+
+    /**
+	 * Represents the action to be taken when the user wants to add a new
+	 * recipe to the book. 
+	 */
+    private class AddRecipeAction extends AbstractAction() {
+        AddRecipeAction() {
+            super("Add Recipe");
+        }
+    }
+
+    /**
+	 * Represents the action to be taken when the user wants to view all
+	 * recipes.
+	 */
+    private class ViewRecipesAction extends AbstractAction() {
+        ViewRecipesAction() {
+            super("View Recipe");
+        }
+    }
+
+
+    /**
+	 * Represents the action to be taken when the user wants to search
+	 * recipes.
+	 */
+    private class SearchRecipesAction extends AbstractAction() {
+        SearchRecipesAction() {
+            super("Search Recipe");
+        }
+    }
+
+    /**
+	 * Represents the action to be taken when the user wants to search
+	 * recipes.
+	 */
+    private class GroceryListAction extends AbstractAction() {
+        GroceryListAction() {
+            super("Create Grocery List");
+        }
+    }
+
+    /**
+	 * Represents the action to be taken when the user wants to search
+	 * recipes.
+	 */
+    private class WeeklyScheduleAction extends AbstractAction() {
+        WeeklyScheduleAction() {
+            super("Create Weekly Schedule");
+        }
+    }
+
 }
 
