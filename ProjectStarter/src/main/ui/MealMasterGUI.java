@@ -1,12 +1,14 @@
 package ui;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 
 import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 import model.*;
@@ -43,6 +45,7 @@ public class MealMasterGUI extends JFrame {
     // EFFECTS: constructor creates the main window
     public MealMasterGUI() {
         super("Meal Master GUI");
+        showLoadingScreen();
 
         rb = new RecipeBook();
 
@@ -119,21 +122,9 @@ public class MealMasterGUI extends JFrame {
         buttonPanel.add(new JButton(new SearchRecipesAction()));
         buttonPanel.add(new JButton(new GroceryListAction()));
         buttonPanel.add(new JButton(new WeeklyScheduleAction()));
-        buttonPanel.add(createPrintCombo());
 
         controlPanel.add(buttonPanel, BorderLayout.WEST);
     }
-
-    /**
-	 * Helper to create print options combo box
-	 * @return  the combo box
-	 */
-	private JComboBox<String> createPrintCombo() {
-		printCombo = new JComboBox<String>();
-		printCombo.addItem("File");
-		printCombo.addItem("Screen");
-		return printCombo;
-	}
 
     // EFFECTS: adds menu bar
     private void addMenuBar() {
@@ -151,6 +142,29 @@ public class MealMasterGUI extends JFrame {
         setJMenuBar(menuBar);
     }
         
+
+    private void showLoadingScreen() {
+        JWindow splash = new JWindow();
+
+        ImageIcon loadingImage = new ImageIcon("data/IMG_2632.jpg");
+        JLabel imageLabel = new JLabel(loadingImage);
+        splash.getContentPane().add(imageLabel);
+
+        splash.pack();
+        splash.setLocationRelativeTo(null);
+        splash.setVisible(true);
+
+        Timer timer = new Timer(2000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                splash.dispose();
+            }
+        });
+
+        timer.setRepeats(false);
+        timer.start();
+    }
+
     /**
 	 * Represents the action to be taken when the user wants to view all
 	 * recipes.
