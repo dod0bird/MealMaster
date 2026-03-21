@@ -26,10 +26,10 @@ import java.util.List;
 @ExcludeFromJacocoGeneratedReport
 public class MealMasterGUI extends JFrame {
     private static final int WIDTH = 800;
-	private static final int HEIGHT = 600;
+    private static final int HEIGHT = 600;
 
     private JDesktopPane desktop;
-	private JInternalFrame controlPanel;
+    private JInternalFrame controlPanel;
 
     private JTextArea recipeArea;
     private JComboBox<String> printCombo;
@@ -46,37 +46,27 @@ public class MealMasterGUI extends JFrame {
     public MealMasterGUI() {
         super("Meal Master GUI");
         showLoadingScreen();
-
         rb = new RecipeBook();
-
         jsonReader = new JsonReader(JSON);
         jsonWriter = new JsonWriter(JSON);
-
         desktop = new JDesktopPane();
         setContentPane(desktop);
-        
         controlPanel = new JInternalFrame("Meal Master", false, false, false, false);
-        controlPanel.setLayout(new BorderLayout());
         controlPanel.setSize(1000, 400);
-
         addRecipePanel();
         addButtonPanel();
         addMenuBar();
         loadRecipeBook();
-
         desktop.add(controlPanel);
         controlPanel.setVisible(true);
-
         setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(WindowEvent e) { 
                 saveOnExit();
             }
         });
-        setLocationRelativeTo(null);
-		setVisible(true);
+	setVisible(true);
     }
     
     private void addRecipePanel() {
@@ -99,10 +89,8 @@ public class MealMasterGUI extends JFrame {
         recipeArea.setText("");
 
         for (Recipe r : rb.getRecipes()) {
-            recipeArea.append("| name: " + r.getRecipeName()
-            + " | cuisine: " + r.getCuisineType()
-            + " | time: " + r.getCookingTime()
-            + " | cost: $" + r.getCost() + "\n");
+            recipeArea.append("| name: " + r.getRecipeName() + " | cuisine: " + r.getCuisineType() + " | time: " 
+                    + r.getCookingTime() + " | cost: $" + r.getCost() + "\n");
         }
 
         if (rb.getRecipes().isEmpty()) {
@@ -226,55 +214,62 @@ public class MealMasterGUI extends JFrame {
 	 */
     private class SearchRecipesAction extends AbstractAction {
         SearchRecipesAction() {
-                super("Search Recipe");
+            super("Search Recipe");
         }
             
         @Override
         public void actionPerformed(ActionEvent e) {
             String[] options = {"ingredient", "cuisine", "max time", "max cost"};
             int choice = JOptionPane.showOptionDialog(null,
-                "Search by:",
-                "Search",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.INFORMATION_MESSAGE,
-                null,
-                options,
-                options[0]);
-
-            List<Recipe> results = new ArrayList<>();
+                    "Search by:",
+                    "Search",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
             try {
-                if (choice == 0) {
-                    String input = JOptionPane.showInputDialog("Enter ingredient name: ");
-                    results = rb.searchByIngredient(input);
-
-                } else if (choice == 1) {
-                    String input = JOptionPane.showInputDialog("Enter cuisine type: ");
-                    results = rb.searchByCuisine(input);
-
-                } else if (choice == 2) {
-                    int input = Integer.parseInt(JOptionPane.showInputDialog("Enter maximum cooking time (mins): "));
-                    results = rb.searchByCookingTime(input);
-
-                } else if (choice == 3) {
-                    Double input = Double.parseDouble(JOptionPane.showInputDialog("Enter maximum budget: "));
-                    results = rb.searchByCost(input);
-                }
-
-                recipeArea.setText("Search Results:\n");
-
-                for (Recipe r : results) {
-                    recipeArea.append("| name: " + r.getRecipeName() 
-                    + " | cuisine: " + r.getCuisineType() 
-                    + " | cooking time: " + r.getCookingTime() 
-                    + " | min cost: $" + r.getCost());
-                }
-
-                if (results.isEmpty()) {
-                    recipeArea.setText("No recipes found.");
-                }
-
+                List<Recipe> results = getSearchResults(choice);
+                displayResults(results);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Invalid input.", "System Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        private List<Recipe> getSearchResults(int choice) {
+            List<Recipe> results = new ArrayList<>();
+
+            if (choice == 0) {
+                String input = JOptionPane.showInputDialog("Enter ingredient name: ");
+                results = rb.searchByIngredient(input);
+
+            } else if (choice == 1) {
+                String input = JOptionPane.showInputDialog("Enter cuisine type: ");
+                results = rb.searchByCuisine(input);
+
+            } else if (choice == 2) {
+                int input = Integer.parseInt(
+                        JOptionPane.showInputDialog("Enter maximum cooking time (mins): "));
+                results = rb.searchByCookingTime(input);
+
+            } else if (choice == 3) {
+                Double input = Double.parseDouble(
+                        JOptionPane.showInputDialog("Enter maximum budget: "));
+                results = rb.searchByCost(input);
+            }
+            return results;
+        }
+
+        private void displayResults(List<Recipe> result) {
+            if (result.isEmpty()) {
+                recipeArea.setText("No recipes found.");
+                return;
+            }
+
+            recipeArea.setText("Search Results: \n");
+            for (Recipe r : result) {
+                recipeArea.append("| name: " + r.getRecipeName() + " | cuisine: " + r.getCuisineType() 
+                        + " | cooking time: " + r.getCookingTime() + " | min cost: $" + r.getCost());
             }
         }
     }
@@ -296,7 +291,7 @@ public class MealMasterGUI extends JFrame {
              
             for (Ingredient i : groceryList) {
                 recipeArea.append("- " + i.getIngredientQuantity() + " " + i.getIngredientUnit() 
-                    + " " + i.getIngredientName() + "\n");
+                        + " " + i.getIngredientName() + "\n");
             }
 
             if (groceryList.isEmpty()) {
@@ -320,8 +315,8 @@ public class MealMasterGUI extends JFrame {
                 int[] timeLimits = new int[7];
 
                 for (int i = 0; i < 7; i++) {
-                    int input = Integer.parseInt(JOptionPane.showInputDialog
-                        ("Enter daily time limits (mins) for day: " + (i + 1)));
+                    int input = Integer.parseInt(JOptionPane.showInputDialog(
+                            "Enter daily time limits (mins) for day: " + (i + 1)));
                     timeLimits[i] = input;
                 }
 
@@ -342,25 +337,25 @@ public class MealMasterGUI extends JFrame {
 
     private void loadRecipeBook() {
         int response = JOptionPane.showConfirmDialog(null,
-            "Load recipe collection from file?",
-            "load data",
-            JOptionPane.YES_NO_OPTION);
+                "Load recipe collection from file?",
+                "load data",
+                JOptionPane.YES_NO_OPTION);
         
         if (response == JOptionPane.YES_NO_OPTION) {
             try {
                 rb = jsonReader.read();
                 updateRecipeDisplay();
             } catch (Exception e) {
-                 JOptionPane.showMessageDialog(null, "Unable to read from file:", "System Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Unable to read from file:", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
     private void saveOnExit() {
         int response = JOptionPane.showConfirmDialog(null,
-            "Save recipe book before exiting?",
-            "save data",
-            JOptionPane.YES_NO_CANCEL_OPTION);
+                "Save recipe book before exiting?",
+                "save data",
+                JOptionPane.YES_NO_CANCEL_OPTION);
 
         if (response == JOptionPane.YES_NO_CANCEL_OPTION) {
             try {
@@ -368,7 +363,7 @@ public class MealMasterGUI extends JFrame {
                 jsonWriter.write(rb);
                 jsonWriter.close();
             } catch (Exception e) {
-                 JOptionPane.showMessageDialog(null, "Unable to save file:", "System Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Unable to save file:", "System Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         System.exit(0);
