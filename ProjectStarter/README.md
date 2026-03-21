@@ -26,3 +26,13 @@
 - As a user, I want to be able to generate a grocery list for any  ingredients required for my planned recipes.
 - As a user, when I start the application, I want to be given the option to load my recipe collection from file.
 - As a user, when I select quit, I want to be given the option to save my recipe collection to file. 
+
+## Instructions for End User
+
+- You can view the panel that displays the recipes added to the book by looking at the right portion of the window
+- You can add multiple recipes to a recipe book by using the "Add Recipe" button and entering recipe details.
+- You can search for recipes based on cost, cuisine, ingredient, cooking time by clicking "Search Recipe" then clicking on the desired search method
+- You can create a weekly cooking schedule by clikcing "Create weekly schedule" then entering your daily time limits in the text box
+- You can locate my visual component by launching the application (loading)
+- You can save the state of my application by closing the window, and clicking "Yes" when prompted to save the current recipe book
+- You can reload the state of my application by running the program and clicking "Yes" when prompted to load the recipe book from file
