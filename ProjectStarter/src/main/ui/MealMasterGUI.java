@@ -32,7 +32,6 @@ public class MealMasterGUI extends JFrame {
     private JInternalFrame controlPanel;
 
     private JTextArea recipeArea;
-    private JComboBox<String> printCombo;
     private JList<String> recipeList;
     private DefaultListModel<String> listModel;
 
@@ -69,6 +68,8 @@ public class MealMasterGUI extends JFrame {
 	setVisible(true);
     }
     
+    // MODIFIES: this
+    // EFFECTS: initializes and adds the recipe display panel to the control panel
     private void addRecipePanel() {
         listModel = new DefaultListModel<>();
         recipeList = new JList<>(listModel);
@@ -85,6 +86,9 @@ public class MealMasterGUI extends JFrame {
         controlPanel.add(scrollPane, BorderLayout.CENTER);
     }
 
+    // MODIFIES: recipeArea
+    // EFFECTS: displays all recipes in the recipe book in the text area,
+    //          if no recipes exist, displays a message
     private void updateRecipeDisplay() {
         recipeArea.setText("");
 
@@ -114,6 +118,7 @@ public class MealMasterGUI extends JFrame {
         controlPanel.add(buttonPanel, BorderLayout.WEST);
     }
 
+    // MODIFIES: this
     // EFFECTS: adds menu bar
     private void addMenuBar() {
         JMenuBar menuBar = new JMenuBar();
@@ -131,6 +136,8 @@ public class MealMasterGUI extends JFrame {
     }
         
 
+    // MODIFIES: this
+    // EFFECTS: adds a recipe to the collection
     private void showLoadingScreen() {
         JWindow splash = new JWindow();
 
@@ -177,7 +184,9 @@ public class MealMasterGUI extends JFrame {
         AddRecipeAction() {
             super("Add Recipe");
         }
-
+        
+        // MODIFIES: recipeArea
+        // EFFECTS: adds a recipe to the collection
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
@@ -216,7 +225,8 @@ public class MealMasterGUI extends JFrame {
         SearchRecipesAction() {
             super("Search Recipe");
         }
-            
+
+        // EFFECTS: search recipes by ingredient, cuisine, cookingtime, or cost
         @Override
         public void actionPerformed(ActionEvent e) {
             String[] options = {"ingredient", "cuisine", "max time", "max cost"};
@@ -236,6 +246,7 @@ public class MealMasterGUI extends JFrame {
             }
         }
 
+        // EFFECTS: processes input for doSearchRecipes
         private List<Recipe> getSearchResults(int choice) {
             List<Recipe> results = new ArrayList<>();
 
@@ -260,6 +271,8 @@ public class MealMasterGUI extends JFrame {
             return results;
         }
 
+        // MODIFIES: recipeArea
+        // EFFECTS: show search results
         private void displayResults(List<Recipe> result) {
             if (result.isEmpty()) {
                 recipeArea.setText("No recipes found.");
@@ -283,6 +296,8 @@ public class MealMasterGUI extends JFrame {
             super("Create Grocery List");
         }
 
+        // MODIFIES: recipeArea
+        // EFFECTS: generates a grocery list from all recipes in recipeBook
         @Override
         public void actionPerformed(ActionEvent e) {
             List<Ingredient> groceryList = rb.generateGroceryList(rb.getRecipes());
@@ -309,6 +324,8 @@ public class MealMasterGUI extends JFrame {
             super("Create Weekly Schedule");
         }
 
+        // MODIFIES: recipeArea
+        // EFFECTS: generates a weekly schedule from provided time limit and budget
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
@@ -335,6 +352,8 @@ public class MealMasterGUI extends JFrame {
         }
     }
 
+    // MODIFIES: rb, recipeArea
+    // EFFECTS: shows loading screen
     private void loadRecipeBook() {
         int response = JOptionPane.showConfirmDialog(null,
                 "Load recipe collection from file?",
@@ -351,6 +370,7 @@ public class MealMasterGUI extends JFrame {
         }
     }
 
+    // EFFECTS: prompts user to save changes upon exit
     private void saveOnExit() {
         int response = JOptionPane.showConfirmDialog(null,
                 "Save recipe book before exiting?",
