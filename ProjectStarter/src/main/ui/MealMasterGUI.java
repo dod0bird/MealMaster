@@ -137,7 +137,7 @@ public class MealMasterGUI extends JFrame {
         
 
     // MODIFIES: this
-    // EFFECTS: adds a recipe to the collection
+    // EFFECTS: displays the loading screen
     private void showLoadingScreen() {
         JWindow splash = new JWindow();
 
@@ -186,7 +186,8 @@ public class MealMasterGUI extends JFrame {
         }
         
         // MODIFIES: recipeArea
-        // EFFECTS: adds a recipe to the collection
+        // EFFECTS: adds a recipe to the collection according to user input and updates the display,
+        //          shows error pop up if input is invalid.
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
@@ -226,7 +227,8 @@ public class MealMasterGUI extends JFrame {
             super("Search Recipe");
         }
 
-        // EFFECTS: search recipes by ingredient, cuisine, cookingtime, or cost
+        // EFFECTS: prompts user search by ingredient, cuisine, cookingtime, or cost, displays results;
+        //          shows error pop up if input is invalid.
         @Override
         public void actionPerformed(ActionEvent e) {
             String[] options = {"ingredient", "cuisine", "max time", "max cost"};
@@ -272,7 +274,7 @@ public class MealMasterGUI extends JFrame {
         }
 
         // MODIFIES: recipeArea
-        // EFFECTS: show search results
+        // EFFECTS: show search results in text area, "No recipes found" if result is empty
         private void displayResults(List<Recipe> result) {
             if (result.isEmpty()) {
                 recipeArea.setText("No recipes found.");
@@ -297,7 +299,8 @@ public class MealMasterGUI extends JFrame {
         }
 
         // MODIFIES: recipeArea
-        // EFFECTS: generates a grocery list from all recipes in recipeBook
+        // EFFECTS: generates and displays grocery list from all recipes in recipeBook, "No ingredients found" if
+        //          there are no ingredients
         @Override
         public void actionPerformed(ActionEvent e) {
             List<Ingredient> groceryList = rb.generateGroceryList(rb.getRecipes());
@@ -325,7 +328,8 @@ public class MealMasterGUI extends JFrame {
         }
 
         // MODIFIES: recipeArea
-        // EFFECTS: generates a weekly schedule from provided time limit and budget
+        // EFFECTS: generates a weekly schedule from provided time limit and budget,
+        //          shows error pop up if input is invalid.
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
@@ -353,7 +357,7 @@ public class MealMasterGUI extends JFrame {
     }
 
     // MODIFIES: rb, recipeArea
-    // EFFECTS: shows loading screen
+    // EFFECTS: shows loading screen, shows error pop up if loading fails
     private void loadRecipeBook() {
         int response = JOptionPane.showConfirmDialog(null,
                 "Load recipe collection from file?",
@@ -370,7 +374,7 @@ public class MealMasterGUI extends JFrame {
         }
     }
 
-    // EFFECTS: prompts user to save changes upon exit
+    // EFFECTS: prompts user to save changes upon exit, shows error pop up if saving fails
     private void saveOnExit() {
         int response = JOptionPane.showConfirmDialog(null,
                 "Save recipe book before exiting?",
