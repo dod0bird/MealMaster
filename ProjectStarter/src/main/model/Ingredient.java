@@ -8,7 +8,7 @@ import persistence.Writable;
 public class Ingredient implements Writable {
     private String ingredientName;     // ingredient name
     private double ingredientQuantity; // ingredient quantity
-    private String ingredientUnit;      // ingredient unit
+    private String ingredientUnit;     // ingredient unit
 
     /*
     * REQUIRES: name has non-zero length, quantity > 0, unit has non-zero length

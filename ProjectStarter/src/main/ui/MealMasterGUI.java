@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import model.Event;
+import model.EventLog;
 
 
 import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
@@ -45,10 +47,7 @@ public class MealMasterGUI extends JFrame {
     public MealMasterGUI() {
         super("Meal Master GUI");
         showLoadingScreen();
-        rb = new RecipeBook();
-        jsonReader = new JsonReader(JSON);
-        jsonWriter = new JsonWriter(JSON);
-        desktop = new JDesktopPane();
+        setUpFields();
         setContentPane(desktop);
         controlPanel = new JInternalFrame("Meal Master", false, false, false, false);
         controlPanel.setSize(1000, 400);
@@ -63,11 +62,22 @@ public class MealMasterGUI extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) { 
                 saveOnExit();
+                printLog();
+                System.exit(0);
             }
         });
 	setVisible(true);
     }
-    
+
+    // MODIFIES: this
+    // EFFECTS: intializes fields
+    private void setUpFields() {
+        rb = new RecipeBook();
+        jsonReader = new JsonReader(JSON);
+        jsonWriter = new JsonWriter(JSON);
+        desktop = new JDesktopPane();
+    }
+
     // MODIFIES: this
     // EFFECTS: initializes and adds the recipe display panel to the control panel
     private void addRecipePanel() {
@@ -91,7 +101,7 @@ public class MealMasterGUI extends JFrame {
     //          if no recipes exist, displays a message
     private void updateRecipeDisplay() {
         recipeArea.setText("");
-
+        
         for (Recipe r : rb.getRecipes()) {
             recipeArea.append("| name: " + r.getRecipeName() + " | cuisine: " + r.getCuisineType() + " | time: " 
                     + r.getCookingTime() + " | cost: $" + r.getCost() + "\n");
@@ -390,6 +400,13 @@ public class MealMasterGUI extends JFrame {
                 JOptionPane.showMessageDialog(null, "Unable to save file:", "System Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-        System.exit(0);
+    }
+
+    // EFFECTS: prints all events in log to console
+    private void printLog() {
+        for (Event e : EventLog.getInstance()) {
+            System.out.println(e.toString());
+            System.out.println();
+        }
     }
 }

@@ -54,6 +54,9 @@ public class Recipe implements Writable {
     // EFFECTS: adds given ingrident to list of ingredients 
     public void addIngredient(Ingredient ingredient) {
         ingredients.add(ingredient);
+        EventLog.getInstance().logEvent(new Event("Added ingredient: " + ingredient.getIngredientName()
+                + " to recipe: " + recipeName)
+        );
     }
 
     // REQUIRES: ingredientName is not null

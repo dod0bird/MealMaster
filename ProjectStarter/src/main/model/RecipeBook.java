@@ -21,6 +21,8 @@ public class RecipeBook implements Writable {
     // EFFECTS: adds recipe to collection
     public void addRecipe(Recipe recipe) {
         recipes.add(recipe);
+        EventLog.getInstance().logEvent(new Event("Added recipe: " + recipe.getRecipeName()
+                + " to recipe book."));
     }
 
     // EFFECTS: returns list of recipes
@@ -49,6 +51,9 @@ public class RecipeBook implements Writable {
                 results.add(r);
             }
         }
+
+        EventLog.getInstance().logEvent(new Event("Searched recipes by ingredient: " + ingredientName));
+
         return results;
     }
 
@@ -62,6 +67,9 @@ public class RecipeBook implements Writable {
                 results.add(r);
             }
         }
+
+        EventLog.getInstance().logEvent(new Event("Searched recipes by cooking time: " + maxTime));
+
         return results;
     }
 
@@ -75,6 +83,8 @@ public class RecipeBook implements Writable {
                 results.add(r);
             }
         }
+        EventLog.getInstance().logEvent(new Event("Searched recipes by cuisine: " + cuisine));
+
         return results;
     }
     
@@ -88,6 +98,9 @@ public class RecipeBook implements Writable {
                 results.add(r);
             }
         }
+
+        EventLog.getInstance().logEvent(new Event("Searched recipes by max cost: " + maxCost));
+
         return results;
     }
 
@@ -107,6 +120,9 @@ public class RecipeBook implements Writable {
                 }
             }
         }
+
+        EventLog.getInstance().logEvent(new Event("Generated weekly schedule with: " + schedule.size() + " recipes."));
+
         return schedule;
     }
 
@@ -119,6 +135,10 @@ public class RecipeBook implements Writable {
         for (Recipe r : plannedRecipes) {
             groceryList.addAll(r.getIngredients());
         }
+
+        EventLog.getInstance().logEvent(new Event("Generated grocery list from: " + plannedRecipes.size() 
+                + " recipes."));
+
         return groceryList;
     }
 

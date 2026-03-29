@@ -36,3 +36,40 @@
 - You can locate my visual component by launching the application (loading)
 - You can save the state of my application by closing the window, and clicking "Yes" when prompted to save the current recipe book
 - You can reload the state of my application by running the program and clicking "Yes" when prompted to load the recipe book from file
+
+## Phase 4: task 2
+Sat Mar 28 17:45:46 PDT 2026
+Added ingredient: noodle to recipe: Pasta
+
+Sat Mar 28 17:45:53 PDT 2026
+Added ingredient: tomato sauce to recipe: Pasta
+
+Sat Mar 28 17:46:13 PDT 2026
+Added ingredient: noodle to recipe: pasta
+
+Sat Mar 28 17:46:20 PDT 2026
+Added ingredient: tomato sauce to recipe: pasta
+
+Sat Mar 28 17:46:27 PDT 2026
+Added ingredient: cheese to recipe: pasta
+
+Sat Mar 28 17:46:29 PDT 2026
+Added recipe: pasta to recipe book.
+
+Sat Mar 28 17:46:35 PDT 2026
+Searched recipes by max cost: 6.0
+
+Sat Mar 28 17:46:41 PDT 2026
+Generated grocery list from: 1 recipes.
+
+Sat Mar 28 17:47:05 PDT 2026
+Added ingredient: rice to recipe: fried rice
+
+Sat Mar 28 17:47:10 PDT 2026
+Added ingredient: spam to recipe: fried rice
+
+Sat Mar 28 17:47:18 PDT 2026
+Added ingredient: egg to recipe: fried rice
+
+Sat Mar 28 17:47:19 PDT 2026
+Added recipe: fried rice to recipe book.
