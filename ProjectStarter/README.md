@@ -73,3 +73,10 @@ Added ingredient: egg to recipe: fried rice
 
 Sat Mar 28 17:47:19 PDT 2026
 Added recipe: fried rice to recipe book.
+
+
+## Phase 4: Task 3
+One improvement I would make is introducing a controller (e.g., RecipeManager) between the UI (MealMasterGUI and MealMasterApp) and the RecipeBook model. Currently the UI interacts directly with the model which works well for a small project and keeps the design straightforward. However, adding an intermediate layer would separate responsibilities by putting application logic outside of the UI. This would make the system easier to extend and maintain if the project were to grow, as changes to fundamental logic would not require modifications across multiple UI components.
+
+
+I would also refactor the event logging system to decouple it from the model classes. Currently Recipe and RecipeBook classes directly call EventLog.getInstance(), which hardcodes the logging behavior into the model. I would instead use an observer pattern so that logging can be handled externally. This would make the model more reusable and flexible, as it would no longer depend on a global singleton.
