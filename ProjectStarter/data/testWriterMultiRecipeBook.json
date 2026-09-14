@@ -1,0 +1,38 @@
+{"recipes": [
+    {
+        "cost": 1,
+        "name": "ramen",
+        "cuisine": "japanese",
+        "ingredients": [
+            {
+                "unit": "g",
+                "quantity": 200,
+                "name": "noodle"
+            },
+            {
+                "unit": "unit",
+                "quantity": 1,
+                "name": "egg"
+            }
+        ],
+        "time": 10
+    },
+    {
+        "cost": 4,
+        "name": "miso soup",
+        "cuisine": "japanese",
+        "ingredients": [
+            {
+                "unit": "g",
+                "quantity": 150,
+                "name": "tofu"
+            },
+            {
+                "unit": "carton",
+                "quantity": 1,
+                "name": "miso soup base"
+            }
+        ],
+        "time": 20
+    }
+]}

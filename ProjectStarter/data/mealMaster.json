@@ -1,40 +1,48 @@
-{
-    "recipes": [
-        {
-            "name": "pasta",
-            "time": 30,
-            "cuisine": "italian",
-            "cost": 13,
-            "ingredients": [
-                {
-                    "name": "spaghetti",
-                    "quantity": 200,
-                    "unit": "g"
-                },
-                {
-                    "name": "tomato sauce",
-                    "quantity": 1,
-                    "unit": "can"
-                }
-            ]
-        },
-        {
-            "name": "fried rice",
-            "time": 20,
-            "cuisine": "chinese",
-            "cost": 5,
-            "ingredients": [
-                {
-                    "name": "rice",
-                    "quantity": 1,
-                    "unit": "cup"
-                },
-                {
-                    "name": "egg",
-                    "quantity": 2,
-                    "unit": "units"
-                }
-            ]
-        }
-    ]
-}
+{"recipes": [
+    {
+        "cost": 5,
+        "name": "pasta",
+        "cuisine": "italian",
+        "ingredients": [
+            {
+                "unit": "g",
+                "quantity": 200,
+                "name": "noodle"
+            },
+            {
+                "unit": "jar",
+                "quantity": 1,
+                "name": "tomato sauce"
+            },
+            {
+                "unit": "g",
+                "quantity": 15,
+                "name": "cheese"
+            }
+        ],
+        "time": 30
+    },
+    {
+        "cost": 5,
+        "name": "fried rice",
+        "cuisine": "chinese",
+        "ingredients": [
+            {
+                "unit": "g",
+                "quantity": 500,
+                "name": "rice"
+            },
+            {
+                "unit": "can",
+                "quantity": 1,
+                "name": "spam"
+            },
+            {
+                "unit": "units",
+                "quantity": 2,
+                "name": "egg"
+            }
+        ],
+        "time": 30
+    }
+]}
